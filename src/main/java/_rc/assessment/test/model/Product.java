@@ -1,22 +1,32 @@
 package _rc.assessment.test.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "product")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_product")
     private Long id;
 
+    @Column(name = "name_product", unique = true)
     private String name;
+
+    @Column(name = "description_product")
     private String description;
+
+    @Column(name = "price_product")
     private double price;
 
-    // Getters and Setters
+    public Product() {}
+
     public Long getId() {
         return id;
     }
