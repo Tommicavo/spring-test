@@ -6,9 +6,15 @@
 </head>
 <body>
     <div class="container">
+        <h1 class="text-center text-danger py-3">Product Inventory</h1>
 
-        <h1 class="text-danger">Product Inventory</h1>
-        <a class="btn btn-success p-2" href="/products/add">Add New Product</a>
+        <!-- Top -->
+        <div class="d-flex justify-content-evenly py-3">
+            <a class="btn btn-success p-2" href="/products/add">Add New Product</a>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewStatsModal">View Stats</button>
+        </div>
+
+        <!-- Products Table -->
         <div th:if="${products.isEmpty()}" th:insert="~{fragments :: emptyProducts}"></div>
         <div th:unless="${products.isEmpty()}">
             <table class="table table-striped">
@@ -27,7 +33,7 @@
                         <td th:text="${product.id}"></td>
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.description}"></td>
-                        <td th:text="${product.price}"></td>
+                        <td th:text="${product.price} + ' €'"></td>
                         <td th:text="${product.quantity}"></td>
                         <td>
                             <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-warning">
@@ -40,6 +46,25 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- ViewStats Modal -->
+        <div class="modal fade" id="viewStatsModal" tabindex="-1" aria-labelledby="viewStatsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5 " id="viewStatsModalLabel">Here's your View Stats!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>The Total Value of your Inventory is: </span>
+                    <span class="fw-bold text-success" th:text="${totalValue} + ' €'"></span>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+                </div>
+            </div>
+            </div>
         </div>
 
     </div>

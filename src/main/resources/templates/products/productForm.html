@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Product</title>
+    <title th:text="${create} ? 'Add Product' : 'Edit Product'"></title>
     <div th:insert="~{fragments :: imports}"></div>
 </head>
 <body>
     <div class="container">
-        <h1 th:text="${create} ? 'Add Product' : 'Edit Product'" class="text-center text-danger py-2"></h1>
+        <h1 th:text="${create} ? 'Add Product' : 'Edit Product'" class="text-center text-danger py-3"></h1>
         <form th:action="${create} ? @{/products} : @{'/products/' + ${product.id}}" th:object="${product}" method="POST">
             <div class="form-group p-2">
                 <label for="nameInput">Name:</label>

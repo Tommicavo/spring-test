@@ -80,4 +80,8 @@ public class Product {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    public double getProductValue() {
+        return getQuantity() * getPrice();
+    }
 }

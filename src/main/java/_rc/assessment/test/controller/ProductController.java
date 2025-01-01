@@ -3,6 +3,7 @@ package _rc.assessment.test.controller;
 import _rc.assessment.test.model.Product;
 import _rc.assessment.test.service.ProductService;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +25,14 @@ public class ProductController {
 
     @GetMapping("/products")
     public String listProducts(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        double totalValue = 0.0;
+        for (Product product : products) {
+            double value = product.getProductValue();
+            totalValue += value;
+        }
+        model.addAttribute("totalValue", totalValue);
         return "products/list";
     }
 
@@ -43,7 +51,7 @@ public class ProductController {
             return "products/productForm";
         }
         productService.saveProduct(product);
-        return listProducts(model);
+        return "redirect:/products";
     }
 
     @GetMapping("/products/edit/{id}")
@@ -61,7 +69,7 @@ public class ProductController {
             return "products/productForm";
         }
         productService.saveProduct(product);
-        return listProducts(model);
+        return "redirect:/products";
     }
 
     @GetMapping("/products/delete/{id}")
