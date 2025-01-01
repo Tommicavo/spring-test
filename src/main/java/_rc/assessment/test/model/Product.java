@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "product")
@@ -17,15 +20,26 @@ public class Product {
     private Long id;
 
     @Column(name = "name_product", unique = true)
+    @NotBlank(message = "Name must not be empty")
     private String name;
 
     @Column(name = "description_product")
+    @NotBlank(message = "Description must not be empty")
     private String description;
 
     @Column(name = "price_product")
+    @NotNull(message = "Price must not be empty")
+    @Min(value = 0, message = "Price must be greater than 0€")
     private double price;
 
-    public Product() {}
+    @Column(name = "quantity_product")
+    @NotNull(message = "Quantity must not be empty")
+    @Min(value = 0, message = "Quantity must be greater than 0")
+    private Integer quantity;
+
+    public Product() {
+        this.quantity = 1;
+    }
 
     public Long getId() {
         return id;
@@ -57,5 +71,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
