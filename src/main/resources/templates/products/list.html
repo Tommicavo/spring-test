@@ -5,30 +5,43 @@
     <div th:insert="~{fragments :: imports}"></div>
 </head>
 <body>
-    <h1 class="text-danger">Product Inventory</h1>
-    <a href="/products/add">Add New Product</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="product : ${products}">
-                <td th:text="${product.id}"></td>
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.description}"></td>
-                <td th:text="${product.price}"></td>
-                <td>
-                    <a th:href="@{'/products/edit/' + ${product.id}}">Edit</a>
-                    <a th:href="@{'/products/delete/' + ${product.id}}">Delete</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+
+        <h1 class="text-danger">Product Inventory</h1>
+        <a class="btn btn-success p-2" href="/products/add">Add New Product</a>
+        <div th:if="${products.isEmpty()}" th:insert="~{fragments :: emptyProducts}"></div>
+        <div th:unless="${products.isEmpty()}">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.description}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${product.quantity}"></td>
+                        <td>
+                            <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-warning">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>
+                            <a th:href="@{'/products/delete/' + ${product.id}}" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 </body>
 </html>
